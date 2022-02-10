@@ -22,7 +22,7 @@ def safeExtGet(prop, fallback) {
 }
 
 apply plugin: 'com.android.library'
-apply plugin: 'maven'
+apply plugin: 'maven-publish'
 
 buildscript {
     // The Android Gradle plugin is only required when opening the android folder stand-alone.
@@ -45,7 +45,7 @@ apply plugin: 'com.android.library'
 if (project == rootProject) {
     apply plugin: 'de.mannodermaus.android-junit5'
 }
-apply plugin: 'maven'
+apply plugin: 'maven-publish'
 
 
 android {
@@ -156,10 +156,9 @@ afterEvaluate { project ->
 
     task installArchives(type: Upload) {
         configuration = configurations.archives
-        repositories.mavenDeployer {
+        repositories.maven {
             // Deploy to react-native-event-bridge/maven, ready to publish to npm
-            repository url: "file://${projectDir}/../android/maven"
-            configureReactNativePom pom
+            url = uri("file://${projectDir}/../android/maven")
         }
     }
 }
